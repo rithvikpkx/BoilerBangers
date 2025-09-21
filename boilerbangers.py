@@ -1,5 +1,5 @@
 import tekore as tk
-from flask import Flask, redirect, request, session, url_for, render_template
+from flask import Flask, redirect, request, session, url_for, render_template, send_from_directory
 from dotenv import load_dotenv
 import os
 import sqlite3
@@ -27,6 +27,12 @@ def login():
     url = spotify_auth.url
     session['spotify_state'] = spotify_auth.state
     return redirect(url)
+
+@app.route('/varsity_regular.ttf')
+
+@app.route('/varsity_regular.ttf')
+def serve_font():
+    return send_from_directory('static', 'varsity_regular.ttf')
 
 @app.route('/callback/')
 def callback():
@@ -119,16 +125,6 @@ def top_tracks():
     conn.close()
     return redirect(url_for('dashboard'))
 
-# @app.route('/api/top10')
-# def api_top10():
-#     conn = sqlite3.connect('boilerbangers.db')
-#     cursor = conn.cursor()
-#     cursor.execute('SELECT song_name, artists, points FROM top_tracks ORDER BY points DESC')
-#     rows = cursor.fetchall()
-#     conn.close()
-#     data = [{'song_name': row[0], 'artists': row[1], 'points': row[2]} for row in rows]
-#     return {'tracks': data}
-
 @app.route('/api/top10')
 def api_top10():
     conn = sqlite3.connect('boilerbangers.db')
@@ -145,11 +141,6 @@ def api_top10():
     data = []
     for row in rows:
         song_name, artists, _ = row
-        # search = spotify.search(f"{song_name} {artists}", types=('track',), limit=1)
-        # if search.tracks.items:
-        #     album_cover = search.tracks.items[0].album.images[0].url
-        # else:
-        #     album_cover = ''  # fallback
 
         search_results, = spotify.search(f"{song_name} {artists}", types=('track',), limit=1)
         if search_results.items:

@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <h1>Welcome to BoilerBangers</h1>
+  <h1>BoilerBangers</h1>
   <a href="/login"><button>Login with Spotify</button></a>
 </body>
 </html> -->
@@ -14,12 +14,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BoilerBangers</title>
-  <link rel="stylesheet" href="/static/style.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face {
+      font-family: 'Varsity';
+      src: url('varsity_regular.ttf') format('truetype');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 60px 20px 100px;
+      position: relative;
+    }
+
+    /* ---- TITLE ---- */
+    .title {
+      font-family: 'Varsity';
+      font-size: 8rem;
+      color: #c99d4c;
+      margin-bottom: 90px;
+      text-align: center;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ---- FORM ---- */
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 40px;
+      position: relative;
+      bottom : 50px;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid #c99d4c;
+      color: #fff;
+      padding: 16px 10px;
+      margin: 24px 0;
+      width: 100%;
+      font-size: 1.3rem;
+      font-family: 'Montserrat', sans-serif;
+      transition: border-color 0.3s ease;
+      text-align: center; /* ✅ CENTER ALIGN */
+    }
+
+    input::placeholder {
+      color: #555;
+    }
+
+    input:focus {
+      outline: none;
+      border-bottom: 3px solid #c99d4c;
+    }
+
+    button {
+      background-color: #c99d4c;
+      color: #000;
+      border: none;
+      padding: 16px 32px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      opacity: 0.7;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    button:not(:disabled):hover {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .error {
+      color: #e74c3c;
+      font-size: 1rem;
+      margin-top: 15px;
+      min-height: 24px;
+    }
+
+    /* ---- EQUALIZER VISUALIZER ---- */
+    .visualizer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 60px;
+      background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 10px;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .visualizer div {
+      width: 6px;
+      background: #c99d4c;
+      animation: bounceUp 2.5s infinite ease-in-out;
+      animation-delay: calc(var(--i) * 0.1s);
+      border-radius: 3px;
+      transform-origin: bottom;
+      margin-left: 6px;
+      margin-right: 6px;
+      flex-shrink: 0;
+      height: calc(20px + var(--random-height, 0) * 40px);
+    }
+
+    @keyframes bounceUp {
+      0%, 100% { transform: scaleY(0.3); }
+      50% { transform: scaleY(1); }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 480px) {
+      .title {
+        font-size: 2.8rem;
+      }
+
+      input {
+        font-size: 1.1rem;
+        padding: 14px 8px;
+      }
+
+      button {
+        font-size: 1rem;
+        padding: 14px 20px;
+      }
+
+      .visualizer {
+        height: 50px;
+        padding: 0 5px;
+      }
+
+      .visualizer div {
+        margin-left: 4px;
+        margin-right: 4px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>BoilerBangers</h1>
-  <a href="/login"><button>Login with Spotify</button></a>
+
+  <!-- Title -->
+  <div class="title">BoilerBangers</div>
+
+  <!-- Login Form -->
+  <div class="form-container">
+    <input type="text" id="fullName" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Spotify Email" required>
+    <a href="/login"><button id="submitBtn" disabled>Login With Spotify</button></a>
+    <p class="error" id="errorMsg"></p>
+  </div>
+
+  <!-- Equalizer Visual -->
+  <div class="visualizer" id="visualizer"></div>
+
+  <script>
+    const fullNameInput = document.getElementById('fullName');
+    const emailInput = document.getElementById('email');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+
+    function validateInputs() {
+      const fullName = fullNameInput.value.trim();
+      const email = emailInput.value.trim();
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (fullName.length > 0 && emailPattern.test(email)) {
+        submitBtn.disabled = false;
+        errorMsg.textContent = '';
+      } else {
+        submitBtn.disabled = true;
+        errorMsg.textContent = 'Please enter a valid full name and email.';
+      }
+    }
+
+    fullNameInput.addEventListener('input', validateInputs);
+    emailInput.addEventListener('input', validateInputs);
+
+    const visualizer = document.getElementById('visualizer');
+    const barWidth = 6;
+    const barMargin = 12;
+    const totalBarSpace = barWidth + barMargin;
+
+    function addBars() {
+      while (visualizer.firstChild) visualizer.removeChild(visualizer.firstChild);
+      const barsCount = Math.floor(window.innerWidth / totalBarSpace);
+      for (let i = 0; i < barsCount; i++) {
+        const bar = document.createElement('div');
+        bar.style.setProperty('--i', i + 1);
+        bar.style.setProperty('--random-height', Math.random().toFixed(2));
+        visualizer.appendChild(bar);
+      }
+    }
+
+    addBars();
+    window.addEventListener('resize', addBars);
+  </script>
+
 </body>
 </html>
