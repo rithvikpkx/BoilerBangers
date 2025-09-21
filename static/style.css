@@ -10,33 +10,6 @@ h1 {
   color: #1DB954;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  background: #282828;
-  margin: 0.5rem auto;
-  padding: 1rem;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-} */
-
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #121212;
-  color: #fff;
-  text-align: center;
-  padding: 2rem;
-}
-
-h1 {
-  color: #1DB954;
-}
-
 button {
   background-color: #1DB954;
   color: white;
@@ -64,4 +37,72 @@ li {
   border-radius: 8px;
   width: 80%;
   max-width: 600px;
+} */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #000000; /* Purdue Black */
+  color: #CFB991; /* Boilermaker Gold */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #CFB991;
+  letter-spacing: 1px;
+}
+
+button {
+  background-color: #CFB991;
+  color: #000000;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #bfa46f;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+li {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  color: #CFB991;
+  box-shadow: 0 0 10px rgba(207, 185, 145, 0.2);
+}
+
+.album-cover {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.track-name {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.artist-name {
+  font-size: 0.9rem;
+  color: #bfa46f;
 }
