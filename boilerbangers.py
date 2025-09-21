@@ -28,7 +28,6 @@ def login():
     session['spotify_state'] = spotify_auth.state
     return redirect(url)
 
-@app.route('/varsity_regular.ttf')
 
 @app.route('/varsity_regular.ttf')
 def serve_font():
@@ -61,7 +60,7 @@ def top_tracks():
     # Connect to DB and create tables if needed
     conn = sqlite3.connect('boilerbangers.db')
     cursor = conn.cursor()
-    # cursor.execute("DELETE FROM top_tracks") # Use to wipe database clean before
+    # cursor.execute("DELETE FROM top_tracks") # Use to wipe database clean
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS top_tracks (
